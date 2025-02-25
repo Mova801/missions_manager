@@ -1,0 +1,45 @@
+from dataclasses import dataclass
+from enum import StrEnum, Enum
+
+
+@dataclass(frozen=True)
+class WindowConstants:
+    app_title: str = "Mission Manager"
+    missions_title: str = "Elenco Missioni"
+    achievements_title: str = "Elenco Achievements"
+    console_width: int = 80
+    console_height: int = 28
+
+
+class ClientStates(Enum):
+    MENU: int = 0
+    MISSIONS: int = 1
+    ACHIEVEMENTS: int = 2
+    MISSION: int = 3
+
+
+class Commands(StrEnum):
+    QUIT: str = "quit"
+    MISSIONS: str = "missioni"
+    ACHIEVEMENTS: str = "achievements"
+    BACK: str = "back"
+    SELECT: str = "select"
+    HOME: str = "home"
+
+
+class ClientCommands:
+    commands: dict[int, set[str]] = {
+        ClientStates.MENU.value: (Commands.MISSIONS.value, Commands.ACHIEVEMENTS.value, Commands.QUIT.value),
+        ClientStates.MISSIONS.value: (Commands.SELECT.value, Commands.BACK.value),
+        ClientStates.ACHIEVEMENTS.value: set([Commands.BACK.value]),
+        ClientStates.MISSION.value: (Commands.HOME.value, Commands.BACK.value)
+    }
+
+    KEY_BINDINGS: dict[str, str] = {
+        Commands.QUIT: "q",
+        Commands.MISSIONS: "m",
+        Commands.ACHIEVEMENTS: "a",
+        Commands.BACK: "b",
+        Commands.SELECT: "s",
+        Commands.HOME: "h"
+    }
