@@ -26,8 +26,8 @@ def main_menu(console: Console, args: list) -> None:
     layout["main"].split(
         Layout(
             # New messages
-            Panel(message, title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50",
-                  height=(max(len(message) // 60 + 2, len(notifications) + 2))),
+            Panel.fit(message, title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50"),
+            # height=(max(len(message) // 40 + 2, len(notifications) + 2)
             name="body", ratio=2
         ),
         Layout(name="side"),
