@@ -4,7 +4,7 @@ from enum import StrEnum, Enum
 
 @dataclass(frozen=True)
 class WindowConstants:
-    app_title: str = "Mission Manager"
+    app_title: str = "Missions Manager"
     version: str = "1.0.0"
     platform: str = "win10/11"
     release: str = f"release{version}-{platform}"
