@@ -18,7 +18,7 @@ def main_menu(console: Console, args: list) -> None:
     layout.split(
         Layout(
             Panel(Text(WindowConstants.app_title, justify="center"), style="bold", border_style="grey50",
-                  title="v-0.0.1", title_align="right"),
+                  title=WindowConstants.release, title_align="right"),
             name="header", size=3
         ),
         Layout(name="main"),
@@ -27,7 +27,7 @@ def main_menu(console: Console, args: list) -> None:
         Layout(
             # New messages
             Panel(message, title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50",
-                  height=(max(5, len(notifications) + 2))),
+                  height=(max(len(message) // 60 + 2, len(notifications) + 2))),
             name="body", ratio=2
         ),
         Layout(name="side"),

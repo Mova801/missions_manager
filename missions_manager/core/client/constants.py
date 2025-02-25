@@ -5,6 +5,9 @@ from enum import StrEnum, Enum
 @dataclass(frozen=True)
 class WindowConstants:
     app_title: str = "Mission Manager"
+    version: str = "1.0.0"
+    platform: str = "win10/11"
+    release: str = f"release{version}-{platform}"
     missions_title: str = "Elenco Missioni"
     achievements_title: str = "Elenco Achievements"
     console_width: int = 80

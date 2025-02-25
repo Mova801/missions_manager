@@ -7,6 +7,8 @@ from rich.panel import Panel
 from rich.rule import Rule
 from rich.text import Text
 
+import libs
+
 
 class Mission:
     def __init__(self, name: str, descr: str, likes: int, url: str = None, start_date: datetime = None,
@@ -22,7 +24,11 @@ class Mission:
 
     def get_rich(self) -> Panel:
         # handling status
-        status: str = "[green]⬤ Completata[/green]"
+        circle: str = '⬤'
+        osinfo: tuple[str, str] = libs.platform.get_platform()
+        if osinfo == ("Windows", "10"):
+            circle = '■'
+        status: str = f"[green]{circle} Completata[/green]"
         if self.end_date is None or self.end_date > datetime.now():
             status = "[blink b red]NEW![/blink b red]"
         start_date_str: str = ''
@@ -35,12 +41,15 @@ class Mission:
             else:
                 start_date_str += '[grey50]-[/grey50](...)[/grey60]'
 
-        dlen: int = 64
+        if osinfo == ("Windows", "10"):
+            dlen: int = 92
+        else:
+            dlen: int = 64
         descr: str = self.description[:dlen]
         descr += '...' if len(self.description) >= dlen else ''
 
         like_and_link: str = f'{self.likes}{Emoji("red_heart")}  ' if self.likes is not None else ''
-        if self.url is not None:
+        if self.url is not None and osinfo != ("Windows", "10"):
             like_and_link += f'[b cornflower_blue]([link={self.url}]pagina missione[/link])[/b cornflower_blue]'
         return Panel(
             Group(
