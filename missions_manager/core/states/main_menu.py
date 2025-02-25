@@ -26,7 +26,10 @@ def main_menu(console: Console, args: list) -> None:
     layout["main"].split(
         Layout(
             # New messages
-            Panel.fit(message, title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50"),
+            Panel.fit(
+                f'[indian_red]✻[/indian_red] {message}',
+                title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50"
+            ),
             # height=(max(len(message) // 40 + 2, len(notifications) + 2)
             name="body", ratio=2
         ),
@@ -43,8 +46,7 @@ def main_menu(console: Console, args: list) -> None:
                         f"yellow] ■ [underline]{n.name}[/underline] {'[b red](NEW!) ' if (n.date + timedelta(days=3)
                                                                                           > datetime.today()) else ''}")
                     for n in notifications
-                ],
-                Padding("[blink yellow] ■ [underline]achievements[/underline] [bold red](NEW!)")
+                ]
             ), title="[bold blue]Notifiche", border_style="grey50", height=len(notifications) + 2),
         ),
         # Layout()

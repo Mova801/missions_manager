@@ -1,6 +1,8 @@
 from time import sleep
 
+from rich.console import Group
 from rich.layout import Layout
+from rich.padding import Padding
 from rich.panel import Panel
 from rich.live import Live
 from rich.progress import Progress, TextColumn, SpinnerColumn
@@ -8,7 +10,7 @@ from rich.text import Text
 
 from core.client import model
 from core.client import interface
-from core.client.constants import ClientStates, Commands
+from core.client.constants import ClientStates, Commands, WindowConstants
 from core.client.constants import ClientCommands
 from core.states.states import CLIENT_STATES
 
@@ -85,7 +87,11 @@ class ClientController:
         progress.add_task("Scaricando missioni")
         progress.add_task("Scaricando achievements")
         layout = Layout(
-            Panel(progress, title="[b white]Caricamento dati", border_style="grey50", height=len(progress.tasks) + 2)
+            Group(
+                Padding(WindowConstants.loading_title, style='medium_purple'),
+                Panel(progress, title="[b white]Caricamento dati", border_style="grey50",
+                      height=len(progress.tasks) + 2)
+            )
         )
         done: bool = False
         with Live(layout, refresh_per_second=10):
