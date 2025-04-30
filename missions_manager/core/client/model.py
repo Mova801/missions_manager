@@ -52,6 +52,13 @@ class ClientModel:
                     if notification['date'] is not None else None
                 )
             )
+
+        self.missions.sort(key=lambda m: m.start_date, reverse=True)
+
+        self.achievements.sort(
+            key=lambda a: datetime.now() if a.unlocking_date is None else a.unlocking_date,
+            reverse=True
+        )
         self.message = response.json()['message']
         return True
 
