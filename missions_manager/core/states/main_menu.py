@@ -6,7 +6,7 @@ from rich.padding import Padding
 from rich.panel import Panel
 from rich.text import Text
 
-from core.client.constants import WindowConstants
+from core.client.constants import WindowConstants, ClientColors
 from core.elements.notification import Notification
 
 
@@ -17,7 +17,8 @@ def main_menu(console: Console, args: list) -> None:
     layout = Layout()
     layout.split(
         Layout(
-            Panel(Text(WindowConstants.app_title, justify="center"), style="bold", border_style="grey50",
+            Panel(Text(WindowConstants.app_title, justify="center"), style="bold",
+                  border_style=ClientColors.border,
                   title=WindowConstants.release, title_align="right"),
             name="header", size=3
         ),
@@ -27,8 +28,10 @@ def main_menu(console: Console, args: list) -> None:
         Layout(
             # New messages
             Panel.fit(
-                f'[indian_red]✻[/indian_red] {message}',
-                title="[bold blue]Nuovi Messaggi", title_align="left", border_style="grey50"
+                f'[{ClientColors.emphasis}]✻[/{ClientColors.emphasis}] {message}',
+                title=f"[{ClientColors.panel_title}]Nuovi Messaggi",
+                title_align="left",
+                border_style=ClientColors.border
             ),
             # height=(max(len(message) // 40 + 2, len(notifications) + 2)
             name="body", ratio=2
@@ -42,12 +45,16 @@ def main_menu(console: Console, args: list) -> None:
             Panel(Group(
                 *[
                     Padding(
+                        f" [light_slate_blue]■[/light_slate_blue] "
                         f"[{'blink ' if n.date + timedelta(days=3) > datetime.today() else ''}"
-                        f"yellow] ■ [underline]{n.name}[/underline] {'[b red](NEW!) ' if (n.date + timedelta(days=3)
-                                                                                          > datetime.today()) else ''}")
+                        f"white][underline]{n.name}[/underline] "
+                        f"{f'[{ClientColors.emphasis}](NEW!) ' if (n.date + timedelta(days=3)
+                                                                   > datetime.today()) else ''}")
                     for n in notifications
                 ]
-            ), title="[bold blue]Notifiche", border_style="grey50", height=len(notifications) + 2),
+            ), title=f"[{ClientColors.panel_title}]Notifiche",
+                border_style=ClientColors.border,
+                height=len(notifications) + 2),
         ),
         # Layout()
     )

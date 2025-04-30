@@ -7,7 +7,8 @@ from core.elements.mission import Mission
 
 
 class ClientModel:
-    def __init__(self) -> None:
+    def __init__(self, server_url: str = 'http://localhost:5000') -> None:
+        self.server_url = server_url
         self.missions: list[Mission] = []
         self.achievements: list[Achievement] = []
         self.notifications: list[Notification] = []
@@ -15,7 +16,7 @@ class ClientModel:
 
     def load_data(self) -> bool | None:
         try:
-            with requests.get('http://127.0.0.1:5000/client_primitives/retrieve_data/') as response:
+            with requests.get(f'{self.server_url}/client_primitives/retrieve_data/') as response:
                 print(response.headers.get('Content-length'))
         except requests.exceptions.ConnectionError:
             return None

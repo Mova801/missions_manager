@@ -27,6 +27,16 @@ class WindowConstants:
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝"""
 
 
+class ClientColors:
+    page_title: str = 'b white'
+    panel_title: str = 'b slate_blue1'
+    border: str = 'grey50'
+    emphasis: str = 'b red'
+    emphasis2: str = 'salmon1'
+    emphasis3: str = 'sky_blue2'
+    warning: str = 'white on light_slate_blue'
+
+
 class ClientStates(Enum):
     MENU: int = 0
     MISSIONS: int = 1

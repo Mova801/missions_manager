@@ -8,6 +8,7 @@ from rich.rule import Rule
 from rich.text import Text
 
 import libs
+from core.client.constants import ClientColors
 
 
 class Mission:
@@ -28,16 +29,17 @@ class Mission:
         osinfo: tuple[str, str] = libs.platform.get_platform()
         if osinfo == ("Windows", "10"):
             circle = '■'
-        status: str = f"[green]{circle} Completata[/green]"
+        status: str = f"[{ClientColors.emphasis3}]{circle} Completata[/{ClientColors.emphasis3}]"
         if self.end_date is None or self.end_date > datetime.now():
-            status = "[blink b red]NEW![/blink b red]"
+            status = f"[blink {ClientColors.emphasis}]NEW![/blink {ClientColors.emphasis}]"
         start_date_str: str = ''
         end_date_str: str = ''
         # handling dates
         if self.start_date is not None:
             start_date_str = '[grey60]' + self.start_date.strftime("%d/%m/%Y")
             if self.end_date is not None and self.ended:
-                end_date_str = '[grey50]-[/grey50]' + self.end_date.strftime("%d/%m/%Y") + '[/grey60]'
+                end_date_str = f'[{ClientColors.border}]-[/{ClientColors.border}]' + self.end_date.strftime(
+                    "%d/%m/%Y") + '[/grey60]'
             else:
                 start_date_str += '[grey50]-[/grey50](...)[/grey60]'
 
@@ -50,13 +52,13 @@ class Mission:
 
         like_and_link: str = f'{self.likes}{Emoji("red_heart")}  ' if self.likes is not None else ''
         if self.url is not None and osinfo != ("Windows", "10"):
-            like_and_link += f'[b cornflower_blue]([link={self.url}]pagina missione[/link])[/b cornflower_blue]'
+            like_and_link += f'[b {ClientColors.emphasis3}]([link={self.url}]pagina missione[/link])[/b {ClientColors.emphasis3}]'
         return Panel(
             Group(
                 Text(descr, overflow='crop'),
                 Padding(like_and_link, (1, 0))
             ),
-            title=f"[yellow]{self.name}[/yellow] {status}",
+            title=f"[{ClientColors.panel_title}]{self.name}[/{ClientColors.panel_title}] {status}",
             title_align="left",
             subtitle=f"{start_date_str}{end_date_str}",
             width=30, height=7, border_style="grey50")
