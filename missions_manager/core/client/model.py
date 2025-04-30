@@ -54,7 +54,6 @@ class ClientModel:
             )
 
         self.missions.sort(key=lambda m: m.start_date, reverse=True)
-
         self.achievements.sort(
             key=lambda a: datetime.now() if a.unlocking_date is None else a.unlocking_date,
             reverse=True
