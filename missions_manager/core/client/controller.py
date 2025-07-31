@@ -1,4 +1,5 @@
 from time import sleep
+import keyboard
 
 from rich.console import Group
 from rich.layout import Layout
@@ -15,13 +16,22 @@ from core.client.constants import ClientCommands
 from core.states.states import CLIENT_STATES
 
 
+def setup_fullscreen() -> None:
+    keyboard.press('f11')
+
+
 class ClientController:
     def __init__(self) -> None:
+        setup_fullscreen()
         self.running = True
         self.view = interface.ClientInterface()
         self.model = model.ClientModel("https://xfish.pythonanywhere.com/")
         self.load_data()
         self.state = ClientStates.MENU
+
+    def close_app(self) -> None:
+        keyboard.press('f11')
+        self.view.clear_console()
 
     def run(self) -> None:
         args: list = [self.model.get_notifications().copy(), self.model.get_message()]
@@ -78,6 +88,7 @@ class ClientController:
                     case Commands.BACK.value:
                         self.state = ClientStates.MISSIONS
                         args.append(self.model.get_missions().copy())
+        self.close_app()
 
     def load_data(self) -> None:
         progress = Progress(
@@ -115,4 +126,4 @@ class ClientController:
             )
             self.view.console.print("\nPremi [yellow][Enter][/yellow] per uscire.")
             input()
-            exit(0)
+            self.close_app()
