@@ -6,6 +6,7 @@ from rich.padding import Padding
 from rich.panel import Panel
 from rich.text import Text
 
+import libs
 from core.client.constants import WindowConstants, ClientColors
 from core.elements.notification import Notification
 
@@ -13,6 +14,11 @@ from core.elements.notification import Notification
 def main_menu(console: Console, args: list) -> None:
     message: str = args.pop()
     notifications: list[Notification] = args.pop()
+
+    bullet_char: str = '✻'
+    osinfo: tuple[str, str] = libs.platform.get_platform()
+    if osinfo == ("Windows", "10"):
+        bullet_char: str = '*'
 
     layout = Layout()
     layout.split(
@@ -28,7 +34,7 @@ def main_menu(console: Console, args: list) -> None:
         Layout(
             # New messages
             Panel.fit(
-                f'[{ClientColors.emphasis}]✻[/{ClientColors.emphasis}] {message}',
+                f'[{ClientColors.emphasis}]{bullet_char}[/{ClientColors.emphasis}] {message}',
                 title=f"[{ClientColors.panel_title}]Nuovi Messaggi",
                 title_align="left",
                 border_style=ClientColors.border
