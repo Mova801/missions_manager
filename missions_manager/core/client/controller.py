@@ -1,5 +1,4 @@
 from time import sleep
-import keyboard
 
 from rich.console import Group
 from rich.layout import Layout
@@ -16,21 +15,17 @@ from core.client.constants import ClientCommands
 from core.states.states import CLIENT_STATES
 
 
-def setup_fullscreen() -> None:
-    keyboard.press('f11')
-
-
 class ClientController:
     def __init__(self) -> None:
-        setup_fullscreen()
         self.running = True
         self.view = interface.ClientInterface()
+        self.view.toggle_fullscreen()
         self.model = model.ClientModel("https://xfish.pythonanywhere.com/")
         self.load_data()
         self.state = ClientStates.MENU
 
     def close_app(self) -> None:
-        keyboard.press('f11')
+        self.view.toggle_fullscreen()
         self.view.clear_console()
 
     def run(self) -> None:
@@ -65,7 +60,7 @@ class ClientController:
                             )
                         )
                         mission_name: str = self.view.get_input(
-                            "seleziona missione", set(self.model.get_missions_names()), True
+                            "seleziona missione", list(self.model.get_missions_names()), True
                         )
                         self.state = ClientStates.MISSION
                         args.append(self.model.get_mission_by_name(mission_name))

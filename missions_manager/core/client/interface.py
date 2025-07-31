@@ -1,5 +1,6 @@
 import os
 
+import keyboard
 from rich.console import Console
 from rich.prompt import Prompt
 from rich.traceback import install
@@ -17,10 +18,13 @@ class ClientInterface:
     def clear_console(self) -> None:
         os.system('cls')
 
+    def toggle_fullscreen(self) -> None:
+        keyboard.press('f11')
+
     def show_state(self, state, args) -> None:
         state(self.console, args)
 
-    def get_input(self, prompt: str = "command", choices: set[str] = None, use_indices: bool = False) -> str:
+    def get_input(self, prompt: str = "command", choices: list[str] = None, use_indices: bool = False) -> str:
         choices = [] if choices is None else choices
         usr_choices: list[str | int]
         return_choices: list[str]
