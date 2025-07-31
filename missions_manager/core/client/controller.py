@@ -19,7 +19,7 @@ class ClientController:
     def __init__(self) -> None:
         self.running = True
         self.view = interface.ClientInterface()
-        self.model = model.ClientModel()
+        self.model = model.ClientModel("https://xfish.pythonanywhere.com/")
         self.load_data()
         self.state = ClientStates.MENU
 
