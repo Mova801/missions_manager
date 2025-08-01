@@ -1,5 +1,7 @@
 # Missions Manager
 
+MissionManager è un sistema creato per gestire minigiochi con i miei amici.
+
 ## Quick Start
 
 ```bash
