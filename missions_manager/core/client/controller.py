@@ -20,7 +20,7 @@ class ClientController:
         self.running = True
         self.view = interface.ClientInterface()
         self.view.toggle_fullscreen()
-        self.model = model.ClientModel("https://xfish.pythonanywhere.com/")
+        self.model = model.ClientModel() #"https://xfish.pythonanywhere.com/")
         self.load_data()
         self.state = ClientStates.MENU
 
